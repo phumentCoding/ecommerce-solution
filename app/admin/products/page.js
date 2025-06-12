@@ -26,12 +26,12 @@ import {
   Chip,
 } from "@mui/material"
 import { Edit, Delete, Add } from "@mui/icons-material"
-import { fetchProducts, addProduct, updateProduct, deleteProduct } from "@/store/slices/productsSlice"
+import { fetchProducts, addProduct, updateProduct, deleteProduct } from "../../../store/slices/productsSlice"
 
 export default function AdminProductsPage() {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { user, isAuthenticated } = useSelector((state) => state.auth)
+  const { user, isAuthenticated, loading: authLoading } = useSelector((state) => state.auth)
   const { products, loading } = useSelector((state) => state.products)
 
   const [open, setOpen] = useState(false)
@@ -46,13 +46,34 @@ export default function AdminProductsPage() {
   })
   const [error, setError] = useState("")
 
+  // Fix: Only fetch products if not already loading (prevents infinite loading)
   useEffect(() => {
-    if (!isAuthenticated || user?.role !== "admin") {
-      router.push("/login")
-      return
+    if (
+      isAuthenticated &&
+      user?.role === "admin" &&
+      !loading &&
+      products.length === 0 // Prevent refetch if already loaded
+    ) {
+      dispatch(fetchProducts())
     }
-    dispatch(fetchProducts())
-  }, [isAuthenticated, user, router, dispatch])
+  }, [isAuthenticated, user, dispatch, loading, products.length])
+
+  // Redirect to login if not authenticated or not admin (do this in useEffect!)
+  useEffect(() => {
+    if (!authLoading && (!isAuthenticated || user?.role !== "admin")) {
+      router.replace("/login")
+    }
+  }, [isAuthenticated, user, authLoading, router])
+
+  // Show loading or nothing while checking auth
+  if (authLoading || (!isAuthenticated && !user)) {
+    return <div>Loading...</div>
+  }
+
+  // Don't render the page if not admin (redirect will happen in useEffect)
+  if (!isAuthenticated || user?.role !== "admin") {
+    return null
+  }
 
   const handleOpen = (product = null) => {
     if (product) {
@@ -102,7 +123,9 @@ export default function AdminProductsPage() {
         ...formData,
         price: Number.parseFloat(formData.price),
         stock: Number.parseInt(formData.stock),
-        image: formData.image || `/placeholder.svg?height=200&width=200&query=${encodeURIComponent(formData.name)}`,
+        image:
+          formData.image ||
+          `/placeholder.svg?height=200&width=200&query=${encodeURIComponent(formData.name)}`,
       }
 
       if (editingProduct) {
@@ -125,10 +148,6 @@ export default function AdminProductsPage() {
         setError("Failed to delete product. Please try again.")
       }
     }
-  }
-
-  if (!isAuthenticated || user?.role !== "admin") {
-    return null
   }
 
   return (
@@ -178,7 +197,13 @@ export default function AdminProductsPage() {
                 <TableCell>
                   <Chip
                     label={product.stock}
-                    color={product.stock > 10 ? "success" : product.stock > 0 ? "warning" : "error"}
+                    color={
+                      product.stock > 10
+                        ? "success"
+                        : product.stock > 0
+                        ? "warning"
+                        : "error"
+                    }
                     size="small"
                   />
                 </TableCell>

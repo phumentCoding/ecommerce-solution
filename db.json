@@ -131,11 +131,11 @@
       "subcategory": "Audio",
       "brand": "SoundMax",
       "stock": 45,
-      "image": "/placeholder.svg?height=400&width=400&text=Wireless+Headphones",
+      "image": "https://m.media-amazon.com/images/I/61RahTQtAqL.jpg",
       "images": [
-        "/placeholder.svg?height=400&width=400&text=Headphones+Front",
-        "/placeholder.svg?height=400&width=400&text=Headphones+Side",
-        "/placeholder.svg?height=400&width=400&text=Headphones+Case"
+        "https://cdn.4imprint.com/prod/700/547979.jpg",
+        "https://5.imimg.com/data5/SELLER/Default/2022/12/BB/TE/IC/2318215/hph2-3-500x500.jpg",
+        "https://i5.walmartimages.com/seo/wegear-Bluetooth-Over-Ear-Headphones-with-Mic-Gaming-Wireless-Corded-Dual-Mode-Headphones-60-Hours-Playtime-Deep-Bass-Black_1527075d-7f91-4b88-8c36-f93fa52eb455.c42e5c42cf08e07b4fc748660cfc22b6.jpeg?odnHeight=320&odnWidth=320&odnBg=FFFFFF"
       ],
       "rating": 4.5,
       "reviews": 128,
@@ -159,7 +159,7 @@
       "subcategory": "Wearables",
       "brand": "FitTech",
       "stock": 32,
-      "image": "/placeholder.svg?height=400&width=400&text=Smart+Watch",
+      "image": "https://i5.walmartimages.com/seo/Smart-Watch-Fits-for-Android-and-iPhone-EEEkit-Fitness-Health-Tracker-Waterproof-Smartwatch-for-Women-Men_819cb65b-8437-4eb3-aba1-ce6513dc8d58.312f5775b50ab18c130fe5a454149fa9.jpeg",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Watch+Face",
         "/placeholder.svg?height=400&width=400&text=Watch+Side",
@@ -187,7 +187,7 @@
       "subcategory": "Footwear",
       "brand": "RunPro",
       "stock": 78,
-      "image": "/placeholder.svg?height=400&width=400&text=Running+Shoes",
+      "image": "https://cdn-img.poizonapp.com/pro-img/cut-img/20240620/a4c58cfdbf414d7c97cf9ae6a578d66b.jpg?x-oss-process=image/format,webp/resize,w_800,h_800",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Shoes+Side",
         "/placeholder.svg?height=400&width=400&text=Shoes+Top",
@@ -215,7 +215,7 @@
       "subcategory": "Kitchen",
       "brand": "BrewMaster",
       "stock": 23,
-      "image": "/placeholder.svg?height=400&width=400&text=Coffee+Maker",
+      "image": "https://premiumlevella.com/wp-content/uploads/2021/01/PCM5422Bfilenamehimodelhi_PCM5422B-1.jpg",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Coffee+Maker+Front",
         "/placeholder.svg?height=400&width=400&text=Coffee+Maker+Controls",
@@ -243,7 +243,7 @@
       "subcategory": "Bags",
       "brand": "TechCarry",
       "stock": 67,
-      "image": "/placeholder.svg?height=400&width=400&text=Laptop+Backpack",
+      "image": "https://www.hypershop.com/cdn/shop/files/HP20P2BKGL-hero-01-v01-r01-2000x2000.webp?v=1747173804",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Backpack+Front",
         "/placeholder.svg?height=400&width=400&text=Backpack+Open",
@@ -271,7 +271,7 @@
       "subcategory": "Audio",
       "brand": "SoundWave",
       "stock": 54,
-      "image": "/placeholder.svg?height=400&width=400&text=Bluetooth+Speaker",
+      "image": "https://cdn.thewirecutter.com/wp-content/media/2024/11/portablebluetoothspeakers-2048px-9481.jpg?auto=webp&quality=75&width=1024",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Speaker+Front",
         "/placeholder.svg?height=400&width=400&text=Speaker+Top",
@@ -299,7 +299,7 @@
       "subcategory": "Fitness",
       "brand": "ZenFit",
       "stock": 89,
-      "image": "/placeholder.svg?height=400&width=400&text=Yoga+Mat",
+      "image": "https://www.yogikuti.com/wp-content/uploads/2018/08/PU-pink-mat-570x684.jpg",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Yoga+Mat+Flat",
         "/placeholder.svg?height=400&width=400&text=Yoga+Mat+Rolled",
@@ -327,7 +327,7 @@
       "subcategory": "Lighting",
       "brand": "LightTech",
       "stock": 41,
-      "image": "/placeholder.svg?height=400&width=400&text=Desk+Lamp",
+      "image": "https://m.media-amazon.com/images/I/513Mqx+kK+L.jpg",
       "images": [
         "/placeholder.svg?height=400&width=400&text=Lamp+On",
         "/placeholder.svg?height=400&width=400&text=Lamp+Adjustable",
