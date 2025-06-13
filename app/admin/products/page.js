@@ -27,6 +27,7 @@ import {
 } from "@mui/material"
 import { Edit, Delete, Add } from "@mui/icons-material"
 import { fetchProducts, addProduct, updateProduct, deleteProduct } from "../../../store/slices/productsSlice"
+import { fetchUserProfile, logout } from "../../../store/slices/authSlice"
 
 export default function AdminProductsPage() {
   const dispatch = useDispatch()
@@ -45,32 +46,48 @@ export default function AdminProductsPage() {
     image: "",
   })
   const [error, setError] = useState("")
+  const [authCheckComplete, setAuthCheckComplete] = useState(false)
 
-  // Fix: Only fetch products if not already loading (prevents infinite loading)
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token && !isAuthenticated && !authLoading) {
+      dispatch(fetchUserProfile())
+        .unwrap()
+        .then(() => {
+          setAuthCheckComplete(true)
+        })
+        .catch((err) => {
+          dispatch(logout())
+          setAuthCheckComplete(true)
+        })
+    } else {
+      setAuthCheckComplete(true)
+    }
+  }, [isAuthenticated, authLoading, dispatch])
+
+  useEffect(() => {
+    if (authCheckComplete && !authLoading && (!isAuthenticated || user?.role !== "admin")) {
+      router.replace("/login")
+    }
+  }, [isAuthenticated, user, authLoading, authCheckComplete, router])
+
   useEffect(() => {
     if (
       isAuthenticated &&
       user?.role === "admin" &&
       !loading &&
-      products.length === 0 // Prevent refetch if already loaded
+      products.length === 0
     ) {
-      dispatch(fetchProducts())
+      dispatch(fetchProducts()).unwrap().catch((err) => {
+        setError("Failed to fetch products: " + err)
+      })
     }
   }, [isAuthenticated, user, dispatch, loading, products.length])
 
-  // Redirect to login if not authenticated or not admin (do this in useEffect!)
-  useEffect(() => {
-    if (!authLoading && (!isAuthenticated || user?.role !== "admin")) {
-      router.replace("/login")
-    }
-  }, [isAuthenticated, user, authLoading, router])
-
-  // Show loading or nothing while checking auth
-  if (authLoading || (!isAuthenticated && !user)) {
+  if (!authCheckComplete || authLoading || (!isAuthenticated && localStorage.getItem("token"))) {
     return <div>Loading...</div>
   }
 
-  // Don't render the page if not admin (redirect will happen in useEffect)
   if (!isAuthenticated || user?.role !== "admin") {
     return null
   }
@@ -136,7 +153,7 @@ export default function AdminProductsPage() {
 
       handleClose()
     } catch (err) {
-      setError("Failed to save product. Please try again.")
+      setError("Failed to save product: " + err)
     }
   }
 
@@ -145,7 +162,7 @@ export default function AdminProductsPage() {
       try {
         await dispatch(deleteProduct(id)).unwrap()
       } catch (err) {
-        setError("Failed to delete product. Please try again.")
+        setError("Failed to delete product: " + err)
       }
     }
   }

@@ -1,103 +1,110 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
-// Mock products data
-const mockProducts = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    description: "High-quality wireless headphones with noise cancellation",
-    price: 199.99,
-    image: "/wireless-headphones.png",
-    category: "Electronics",
-    stock: 50,
-    rating: 4.5,
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    description: "Feature-rich smartwatch with health monitoring",
-    price: 299.99,
-    image: "/smartwatch-lifestyle.png",
-    category: "Electronics",
-    stock: 30,
-    rating: 4.3,
-  },
-  {
-    id: 3,
-    name: "Running Shoes",
-    description: "Comfortable running shoes for all terrains",
-    price: 129.99,
-    image: "/running-shoes-on-track.png",
-    category: "Sports",
-    stock: 75,
-    rating: 4.7,
-  },
-  {
-    id: 4,
-    name: "Coffee Maker",
-    description: "Automatic coffee maker with programmable settings",
-    price: 89.99,
-    image: "/modern-coffee-maker.png",
-    category: "Home",
-    stock: 25,
-    rating: 4.2,
-  },
-  {
-    id: 5,
-    name: "Laptop Backpack",
-    description: "Durable laptop backpack with multiple compartments",
-    price: 59.99,
-    image: "/laptop-backpack.png",
-    category: "Accessories",
-    stock: 40,
-    rating: 4.4,
-  },
-  {
-    id: 6,
-    name: "Bluetooth Speaker",
-    description: "Portable Bluetooth speaker with excellent sound quality",
-    price: 79.99,
-    image: "/bluetooth-speaker.png",
-    category: "Electronics",
-    stock: 60,
-    rating: 4.6,
-  },
-]
+export const fetchProducts = createAsyncThunk("products/fetchProducts", async (_, { rejectWithValue }) => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
 
-export const fetchProducts = createAsyncThunk("products/fetchProducts", async () => {
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 500))
-  return mockProducts
-})
-
-export const fetchProductById = createAsyncThunk("products/fetchProductById", async (id) => {
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 300))
-  return mockProducts.find((product) => product.id === Number.parseInt(id))
-})
-
-export const addProduct = createAsyncThunk("products/addProduct", async (productData) => {
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 500))
-  const newProduct = {
-    ...productData,
-    id: Date.now(),
-    rating: 0,
+    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch products");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message);
   }
-  return newProduct
-})
+});
 
-export const updateProduct = createAsyncThunk("products/updateProduct", async ({ id, ...productData }) => {
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 500))
-  return { id, ...productData }
-})
+export const fetchProductById = createAsyncThunk("products/fetchProductById", async (id, { rejectWithValue }) => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
 
-export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id) => {
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 300))
-  return id
-})
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch product");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+export const addProduct = createAsyncThunk("products/addProduct", async (productData, { rejectWithValue }) => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
+
+    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(productData),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to add product");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+export const updateProduct = createAsyncThunk("products/updateProduct", async ({ id, ...productData }, { rejectWithValue }) => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
+
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(productData),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to update product");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id, { rejectWithValue }) => {
+  try {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) throw new Error("No token found");
+
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete product");
+    }
+    return id;
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
 
 const productsSlice = createSlice({
   name: "products",
@@ -109,39 +116,76 @@ const productsSlice = createSlice({
   },
   reducers: {
     clearCurrentProduct: (state) => {
-      state.currentProduct = null
+      state.currentProduct = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
-        state.loading = true
+        state.loading = true;
+        state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false
-        state.products = action.payload
+        state.loading = false;
+        state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
-        state.currentProduct = action.payload
+        state.loading = false;
+        state.currentProduct = action.payload;
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(addProduct.fulfilled, (state, action) => {
-        state.products.push(action.payload)
+        state.loading = false;
+        state.products.push(action.payload);
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex((p) => p.id === action.payload.id)
+        state.loading = false;
+        const index = state.products.findIndex((p) => p.id === action.payload.id);
         if (index !== -1) {
-          state.products[index] = action.payload
+          state.products[index] = action.payload;
         }
       })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.products = state.products.filter((p) => p.id !== action.payload)
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = state.products.filter((p) => p.id !== action.payload);
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
-})
+});
 
-export const { clearCurrentProduct } = productsSlice.actions
-export default productsSlice.reducer
+export const { clearCurrentProduct } = productsSlice.actions;
+export default productsSlice.reducer;

@@ -34,15 +34,18 @@ export default function LoginPage() {
 
   const redirect = searchParams.get("redirect") || "/"
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push(redirect)
-    }
-  }, [isAuthenticated, router, redirect])
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     router.push(redirect)
+  //   }
+  // }, [isAuthenticated, router, redirect])
 
   useEffect(() => {
+    if (error) {
+      setFormData((prev) => ({ ...prev, password: "" }));
+    }
     dispatch(clearError())
-  }, [dispatch])
+  }, [error, dispatch])
 
   const handleChange = (e) => {
     setFormData({
@@ -113,10 +116,8 @@ export default function LoginPage() {
               margin="normal"
               required
               autoFocus
-              sx={{
-                mb: 2,
-                background: "#fff",
-              }}
+              disabled={loading}
+              sx={{ mb: 2, background: "#fff" }}
             />
 
             <TextField
@@ -129,6 +130,7 @@ export default function LoginPage() {
               onChange={handleChange}
               margin="normal"
               required
+              disabled={loading}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -137,16 +139,14 @@ export default function LoginPage() {
                       onClick={handleClickShowPassword}
                       edge="end"
                       tabIndex={-1}
+                      disabled={loading}
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
-              sx={{
-                mb: 2,
-                background: "#fff",
-              }}
+              sx={{ mb: 2, background: "#fff" }}
             />
 
             <Button

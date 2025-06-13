@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // API endpoints
 const LOGIN_API = "https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/auth/login";
 const REGISTER_API = "https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/auth/register";
-const PROFILE_API = "https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/auth/me";
+const PROFILE_API = "https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/auth/user";
 
 // --- LOGIN THUNK ---
 export const loginUser = createAsyncThunk(
@@ -74,10 +74,8 @@ export const fetchUserProfile = createAsyncThunk(
       });
 
       if (!response.ok) {
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("token");
-        }
-        throw new Error("Session expired. Please log in again.");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Session expired. Please log in again.");
       }
 
       const user = await response.json();
@@ -172,7 +170,6 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
         state.user = null;
-        state.token = null;
         state.error = action.payload;
       });
   },
