@@ -37,13 +37,13 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`http://localhost:3001/products/${params.id}`)
+        const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${params.id}`)
         if (!response.ok) throw new Error("Product not found")
         const data = await response.json()
         setProduct(data)
 
         // Fetch related products from same category
-        const relatedResponse = await fetch(`http://localhost:3001/products?category=${data.category}&_limit=4`)
+        const relatedResponse = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products?category=${data.category}&_limit=4`)
         const relatedData = await relatedResponse.json()
         setRelatedProducts(relatedData.filter((p) => p.id !== data.id))
       } catch (err) {

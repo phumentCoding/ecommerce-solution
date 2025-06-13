@@ -5,7 +5,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (_
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products", {
+    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/admin/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +25,7 @@ export const fetchProductById = createAsyncThunk("products/fetchProductById", as
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/admin/products/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,7 @@ export const addProduct = createAsyncThunk("products/addProduct", async (product
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products", {
+    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/admin/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export const updateProduct = createAsyncThunk("products/updateProduct", async ({
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/admin/products/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (i
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products/${id}`, {
+    const response = await fetch(`https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/admin/products/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

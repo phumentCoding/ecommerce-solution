@@ -140,14 +140,14 @@ export default function Navbar() {
                 Categories
                 <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-gray-900 group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
               </Link>
-              <Link
+              {/* <Link
                 href="/deals"
                 className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 relative group flex items-center gap-1"
               >
                 <span>Deals</span>
                 <Sparkles className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-900 transition-colors" />
                 <span className="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-gray-900 group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
-              </Link>
+              </Link> */}
             </div>
 
             {/* Search Bar */}

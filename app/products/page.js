@@ -183,7 +183,7 @@ export default function ProductsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Debug Info */}
         <div className="bg-green-100 border border-green-300 rounded-lg p-4 mb-6">
-          <p className="text-green-800">✅ Connected to JSON Server | {products.length} products loaded</p>
+          <p className="text-green-800">✅ {products.length} products loaded</p>
         </div>
 
         {/* Header */}
