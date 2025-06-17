@@ -5,7 +5,7 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (_
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) throw new Error("No token found");
 
-    const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products", {
+    const response = await fetch("http://23.23.27.88/api/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

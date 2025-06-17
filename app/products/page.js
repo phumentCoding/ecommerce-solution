@@ -29,7 +29,7 @@ export default function ProductsPage() {
         setLoading(true)
         setError(null)
 
-        const response = await fetch("https://ecommerce-solution-api-main-f9fiq8.laravel.cloud/api/products")
+        const response = await fetch("http://23.23.27.88/api/products")
 
         console.log("📡 Response status:", response.status)
 
